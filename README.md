@@ -1,10 +1,10 @@
-# React XPay Build 
+# React XPay Build
 
 React library for [Nexi's XPay Build](https://ecommerce.nexi.it/specifiche-tecniche/build/introduzione.html)
 
 ## Requirements
 
-The minimum supported version of React is v16.8. 
+The minimum supported version of React is v16.8.
 If you use an older version you need to upgrade React to use this library.
 
 ## Documentation
@@ -19,20 +19,20 @@ If you use an older version you need to upgrade React to use this library.
 
 ```jsx
 import React from 'react';
-import { loadXPay, XPayProvider } from "react-xpay";
+import { loadXPay, XPayProvider } from 'react-xpay';
 
 const sdkLoader = loadXPay({
-	alias: 'YOUR_ALIAS, 
+	alias: 'YOUR_ALIAS',
 	isProduction: false
 });
 
 const App = () => {
   const nonceHandler = (_nonceResp) => {
-    // submit nonce response data to your backend 
+    // submit nonce response data to your backend
     // to pay with the server-to-server integration
   }
   return (
-    <XPayProvider 
+    <XPayProvider
       sdk={sdkLoader}
       apiKey="YOUR_ALIAS"
       order={order}
@@ -50,7 +50,7 @@ const App = () => {
 - In your checkout component you can use the `XPayCard` component to show XPay's card input.
 
 - To pay you can use the use `yourCardRef.current.createNonce()` or the helper `pay` function from `useCard`  
-**You need to pass a ref to the XPayCard component**
+  **You need to pass a ref to the XPayCard component**
 
 ```jsx
 import { XPayCard, useCard } from "react-xpay";
@@ -59,10 +59,10 @@ const YourCheckoutComponent = () => {
 	const cardRef = useRef(null);
 
 	const handlePayWithComponent = () => {
-    cardRef.current.createNonce()
-  }
+		cardRef.current.createNonce();
+	};
 
-  const { pay } = useCard();
+	const { pay } = useCard();
 	const handlePayWithHelperFx = useCallback(() => {
 		pay(cardRef);
 	}, [cardRef]);
@@ -70,11 +70,11 @@ const YourCheckoutComponent = () => {
 	return (
 		<>
 			<XPayCard ref={cardRef} />
-      <button onClick={handlePayWithHelperFx}>Pay</button>
-      <button onClick={handlePayWithComponent}>Or use this Pay button</button>
-    </>
-  )
-}
+			<button onClick={handlePayWithHelperFx}>Pay</button>
+			<button onClick={handlePayWithComponent}>Or use this Pay button</button>
+		</>
+	);
+};
 ```
 
 ### Pay with Alternate Payment Methods (APM)
@@ -86,7 +86,7 @@ const YourCheckoutComponent = () => {
 ```jsx
 const App = () => {
   return (
-    <XPayProvider 
+    <XPayProvider
       sdk={sdkLoader}
       apiKey="YOUR_ALIAS"
       order={order}
@@ -104,10 +104,8 @@ const App = () => {
 import { XPayAPM } from "react-xpay";
 
 const YourCheckoutComponent = () => {
-	return (
-    <XPayAPM />
-  )
-}
+	return <XPayAPM />;
+};
 ```
 
 - Show only APM buttons in the selected array
@@ -116,10 +114,8 @@ const YourCheckoutComponent = () => {
 import { XPayAPM } from "react-xpay";
 
 const YourCheckoutComponent = () => {
-	return (
-			<XPayAPM paymentMethodName={["SATISPAY","PAYPAL"]} />
-  )
-}
+	return <XPayAPM paymentMethodName={["SATISPAY", "PAYPAL"]} />;
+};
 ```
 
 - Pick your selected APM buttons (e.g. to show them in different page sections)
@@ -129,20 +125,20 @@ import { XPayAPM } from "react-xpay";
 
 const YourCheckoutComponent = () => {
 	return (
-    <>
-      <div style={{paddingBottom: '20px'}}>
-        <XPayAPM paymentMethodName="PAYPAL" />
-      </div>
-      <XPayAPM paymentMethodName="AMAZONPAY" />
-      <XPayAPM paymentMethodName="SATISPAY" />
-    </>
-  )
-}
+		<>
+			<div style={{ paddingBottom: "20px" }}>
+				<XPayAPM paymentMethodName="PAYPAL" />
+			</div>
+			<XPayAPM paymentMethodName="AMAZONPAY" />
+			<XPayAPM paymentMethodName="SATISPAY" />
+		</>
+	);
+};
 ```
 
 ## Recurring Payments & Custom configs
 
-You can pass a customConfig object to XPayProvider to handle [recurring payments](https://ecommerce.nexi.it/specifiche-tecniche/build/pagamentoricorrente.html) and other custom parameters. 
+You can pass a customConfig object to XPayProvider to handle [recurring payments](https://ecommerce.nexi.it/specifiche-tecniche/build/pagamentoricorrente.html) and other custom parameters.
 All parameters in the customConfig will be added to the library config object.
 Properties into the `main` object will be appended to tha main config object.
 
@@ -153,7 +149,7 @@ const customConfig = {
 		serviceType: 'AN'
 	},
 	baseConfig: {
-		
+
 	},
 	paymentParams: {},
 	customParams: {
@@ -164,7 +160,7 @@ const customConfig = {
 
 const App = () => {
   return (
-    <XPayProvider 
+    <XPayProvider
       sdk={sdkLoader}
       apiKey="YOUR_ALIAS"
       order={order}

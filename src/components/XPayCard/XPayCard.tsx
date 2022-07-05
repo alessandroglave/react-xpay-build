@@ -1,4 +1,4 @@
-import { useXPay } from "components/XPayProvider/XPayProvider";
+import { useXPay } from "components/XPayProvider";
 import React, {
 	forwardRef,
 	useEffect,
@@ -9,7 +9,7 @@ import React, {
 
 interface IProps {
 	/** Defaults `true`. Use `showError = false` to hide library errors. **/
-	showErrors?: boolean
+	showErrors?: boolean;
 	/** With `showError = false` you can pass a handler to set errors in your component **/
 	cardErrorHandler?: (v: string) => void | null;
 }
@@ -17,7 +17,7 @@ interface IProps {
 /**
  * @prop showErrors
  * @prop cardErrorHandler
-**/
+ **/
 export const XPayCard = forwardRef<unknown, IProps>(
 	({ showErrors = true, cardErrorHandler = null }, ref) => {
 		const cardErrors = useRef(null);
@@ -52,7 +52,7 @@ export const XPayCard = forwardRef<unknown, IProps>(
 
 		useEffect(() => {
 			const onCardError = (e: any) => {
-				console.log(e)
+				console.log(e);
 				if (cardErrorHandler) {
 					cardErrors.current = e.detail.errorMessage || null;
 					cardErrorHandler(e.detail.errorMessage || null);
@@ -74,7 +74,9 @@ export const XPayCard = forwardRef<unknown, IProps>(
 		return (
 			<>
 				<div id="react-xpay-card" ref={cardRef}></div>
-				{ showErrors && cardErrors && cardErrors?.current && (<div>{cardErrors.current}</div>)}
+				{showErrors && cardErrors && cardErrors?.current && (
+					<div>{cardErrors.current}</div>
+				)}
 			</>
 		);
 	}
