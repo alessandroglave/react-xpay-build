@@ -61,6 +61,7 @@ export type PaymentMethod =
 	| "BCMC"
 	| "P24"
 	| "GOOGLEPAY"
+	| "PAYPAL"
 	| "SATISPAY";
 
 export interface OrderI {
