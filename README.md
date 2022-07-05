@@ -18,31 +18,30 @@ If you use an older version you need to upgrade React to use this library.
 - Pass a nonceHandler function to the provider to handle card payments. It's called at the custom event `XPay_Nonce`.
 
 ```jsx
-import React from 'react';
-import { loadXPay, XPayProvider } from 'react-xpay-build';
+import React from "react";
+import { loadXPay, XPayProvider } from "react-xpay-build";
 
 const sdkLoader = loadXPay({
-	alias: 'YOUR_ALIAS',
-	isProduction: false
+	alias: "YOUR_ALIAS",
+	isProduction: false,
 });
 
 const App = () => {
-  const nonceHandler = (_nonceResp) => {
-    // submit nonce response data to your backend
-    // to pay with the server-to-server integration
-  }
-  return (
-    <XPayProvider
-      sdk={sdkLoader}
-      apiKey="YOUR_ALIAS"
-      order={order}
-      nonceHandler={nonceHandler}
-    >
-      <YourCheckoutComponent>
-    <XPayProvider />
-  )
-}
-
+	const nonceHandler = (_nonceResp) => {
+		// submit nonce response data to your backend
+		// to pay with the server-to-server integration
+	};
+	return (
+		<XPayProvider
+			sdk={sdkLoader}
+			apiKey="YOUR_ALIAS"
+			order={order}
+			nonceHandler={nonceHandler}
+		>
+			<YourCheckoutComponent />
+		</XPayProvider>
+	);
+};
 ```
 
 ### Pay with card
@@ -85,17 +84,17 @@ const YourCheckoutComponent = () => {
 
 ```jsx
 const App = () => {
-  return (
-    <XPayProvider
-      sdk={sdkLoader}
-      apiKey="YOUR_ALIAS"
-      order={order}
-      paymentResultHandler={paymentResultHandler}
-    >
-      <YourCheckoutComponent>
-    <XPayProvider />
-  )
-}
+	return (
+		<XPayProvider
+			sdk={sdkLoader}
+			apiKey="YOUR_ALIAS"
+			order={order}
+			paymentResultHandler={paymentResultHandler}
+		>
+			<YourCheckoutComponent />
+		</XPayProvider>
+	);
+};
 ```
 
 - Pay with all available payment methods
@@ -145,30 +144,28 @@ Properties into the `main` object will be appended to tha main config object.
 ```jsx
 const customConfig = {
 	main: {
-		requestType: 'AN',
-		serviceType: 'AN'
+		requestType: "AN",
+		serviceType: "AN",
 	},
-	baseConfig: {
-
-	},
+	baseConfig: {},
 	paymentParams: {},
 	customParams: {
-    num_contratto: '123'
-  },
-	language: 'ITA',
-}
+		num_contratto: "123",
+	},
+	language: "ITA",
+};
 
 const App = () => {
-  return (
-    <XPayProvider
-      sdk={sdkLoader}
-      apiKey="YOUR_ALIAS"
-      order={order}
-      paymentResultHandler={paymentResultHandler}
-      customConfig={customConfig}
-    >
-      <YourCheckoutComponent>
-    <XPayProvider />
-  )
-}
+	return (
+		<XPayProvider
+			sdk={sdkLoader}
+			apiKey="YOUR_ALIAS"
+			order={order}
+			paymentResultHandler={paymentResultHandler}
+			customConfig={customConfig}
+		>
+			<YourCheckoutComponent />
+		</XPayProvider>
+	);
+};
 ```
