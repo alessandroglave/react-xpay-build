@@ -1,6 +1,6 @@
 {
 	"name": "react-xpay-build",
-	"version": "0.1.0",
+	"version": "1.0.0",
 	"keywords": [],
 	"description": "React SDK for XPay Build",
 	"main": "dist/index.min.js",
@@ -16,7 +16,6 @@
 	},
 	"homepage": "https://github.com/alessandroglave/react-xpay-build",
 	"license": "MIT",
-	"private": true,
 	"scripts": {
 		"start": "rollup -c rollup.config.js -w",
 		"clean": "rm -rf dist",
