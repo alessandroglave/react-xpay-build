@@ -20,7 +20,7 @@
 	"scripts": {
 		"start": "rollup -c rollup.config.js -w",
 		"clean": "rm -rf dist",
-		"build": "clean && tsc && rollup -c rollup.config.js && cp package.json README.md ./dist"
+		"build": "tsc && rollup -c rollup.config.js && cp package.json README.md ./dist"
 	},
 	"engines": {
 		"node": ">=10",
@@ -49,6 +49,8 @@
 		"lint-staged": "^11.2.0",
 		"postcss": "^8.3.9",
 		"prettier": "^2.4.1",
+		"react": "^16.8.0",
+		"react-dom": "^16.8.0",
 		"rollup": "^2.58.0",
 		"rollup-plugin-commonjs": "^10.1.0",
 		"rollup-plugin-json": "^4.0.0",
