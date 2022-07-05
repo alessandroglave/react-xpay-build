@@ -1,20 +1,16 @@
 export type XPay = any;
 
 export interface NexiEvent extends Event {
-	[key:string] : any
+	[key: string]: any;
 }
-
 
 export interface XPaySdkParams {
-	alias: string,
-	isProduction: boolean,
-	url?: string
+	alias: string;
+	isProduction: boolean;
+	url?: string;
 }
 
-export type LoadXPay = (
-	args: XPaySdkParams
-) => Promise<XPay | null>;
-
+export type LoadXPay = (args: XPaySdkParams) => Promise<XPay | null>;
 
 export type SetLoadParams = (args: XPaySdkParams) => void;
 
@@ -34,77 +30,75 @@ export enum ERRORS {
 	FAILED_TO_LOAD = "Failed to load XPay SDK",
 	SDK_NOT_AVAILABLE = "XPay's sdk is not available",
 	XPAY_NOT_VALID = "XPay object is not valid",
-	PROVIDER_PROPS_CHANGED ="Unsupported prop change on XPayProvider. You cannot change its props after setting them",
+	PROVIDER_PROPS_CHANGED = "Unsupported prop change on XPayProvider. You cannot change its props after setting them",
 	USE_XPAY_PROVIDER = "Error, useXPay must be used in a component wrapped in XPayProvider",
 	MISSING_NONCE_HANDLER = "onNonceEvent fired but custom handler is missing",
 	MISSING_PAYMENT_RESULT_HANDLER = "PaymentResult fired but custom handler is missing",
 }
 
 export enum Languages {
-	ITA = 'ITA',
-	ENG = 'ENG',
-	SPA = 'SPA',
-	FRA = 'FRA',
-	GER = 'GER',
-	JPN = 'JPN',
-	CHI = 'CHI',
-	ARA = 'ARA',
-	RUS = 'RUS',
-	POR = 'POR'
+	ITA = "ITA",
+	ENG = "ENG",
+	SPA = "SPA",
+	FRA = "FRA",
+	GER = "GER",
+	JPN = "JPN",
+	CHI = "CHI",
+	ARA = "ARA",
+	RUS = "RUS",
+	POR = "POR",
 }
 
-export enum PaymentMethods {
-	APPLEPAY = 'APPLEPAY',
-	AMAZONPAY = 'AMAZONPAY',
-	MYBANK = 'MYBANK',
-	ALIPAY = 'ALIPAY',
-	WECHATPAY = 'WECHATPAY',
-	GIROPAY = 'GIROPAY',
-	IDEAL = 'IDEAL',
-	EPS = 'EPS',
-	BCMC = 'BCMC',
-	P24 = 'P24',
-	GOOGLEPAY = 'GOOGLEPAY',
-	SATISPAY = 'SATISPAY',
-}
-export type PaymentMethod = PaymentMethods
+export type PaymentMethod =
+	| "APPLEPAY"
+	| "AMAZONPAY"
+	| "MYBANK"
+	| "ALIPAY"
+	| "WECHATPAY"
+	| "GIROPAY"
+	| "IDEAL"
+	| "EPS"
+	| "BCMC"
+	| "P24"
+	| "GOOGLEPAY"
+	| "SATISPAY";
 
 export interface OrderI {
-	amount: number | string, 
-	transactionId: string, 
-	currency: number | string, 
-	timeStamp: number, 
-	mac: string, 
-	url?: string, 
-	urlPost?: string, 
-	urlBack?: string, 
-	requestType?: string, 
-	serviceType?: string, 
-	num_contratto?: number | string, 
+	amount: number | string;
+	transactionId: string;
+	currency: number | string;
+	timeStamp: number;
+	mac: string;
+	url?: string;
+	urlPost?: string;
+	urlBack?: string;
+	requestType?: string;
+	serviceType?: string;
+	num_contratto?: number | string;
 }
 
 export interface OrderInterface extends OrderI, GenericObject {}
 
 export interface XPayProviderI {
-	sdk: any,
-	order: OrderInterface,
-	apiKey: string,
-	nonceHandler?: any,
-	paymentResultHandler?: any,
-	customConfig?: CustomConfigI | null,
-	secure?: boolean,
-	children?: any
+	sdk: any;
+	order: OrderInterface;
+	apiKey: string;
+	nonceHandler?: any;
+	paymentResultHandler?: any;
+	customConfig?: CustomConfigI | null;
+	secure?: boolean;
+	children?: any;
 }
 
 export interface GenericObject {
-	[key: string]: any
+	[key: string]: any;
 }
 export interface CustomConfigI {
-	main?: GenericObject
-	baseConfig?: GenericObject
-	paymentParams?: GenericObject
-	customParams?: GenericObject
-	language?: Languages
+	main?: GenericObject;
+	baseConfig?: GenericObject;
+	paymentParams?: GenericObject;
+	customParams?: GenericObject;
+	language?: Languages;
 }
 
 /* export interface XPaySdkConstructor {
