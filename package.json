@@ -1,13 +1,18 @@
 {
 	"name": "react-xpay-build",
-	"version": "1.0.1",
-	"keywords": [],
+	"version": "1.0.2",
+	"keywords": [
+		"XPay",
+		"react"
+	],
 	"description": "React SDK for XPay Build",
 	"main": "dist/index.min.js",
-	"module": "dist/index.es.js",
+	"module": "dist/index.esm.js",
 	"types": "dist/index.d.ts",
 	"files": [
-		"dist"
+		"dist",
+		"src",
+		"types"
 	],
 	"author": "Alessandro Glave <alessandro.glave@gmail.com>",
 	"repository": {
@@ -16,10 +21,11 @@
 	},
 	"homepage": "https://github.com/alessandroglave/react-xpay-build",
 	"license": "MIT",
+	"private": false,
 	"scripts": {
 		"start": "rollup -c rollup.config.js -w",
 		"clean": "rm -rf dist",
-		"build": "tsc && rollup -c rollup.config.js && cp package.json README.md ./dist"
+		"build": "rollup -c"
 	},
 	"engines": {
 		"node": ">=10",
