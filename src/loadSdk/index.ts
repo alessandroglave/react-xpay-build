@@ -5,9 +5,8 @@ let loadSdkCalled = false;
 
 export const loadXPay: LoadXPay = (args: XPaySdkParams) => {
 	if (loadSdkCalled) {
-		throw new Error("Cannot change sdk's load parameters");
+		console.warn("Library already initialized");
 	}
-	// TODO args validation
 	loadSdkCalled = true;
 	return loadScript(args).then((xpay) => initXPay(xpay, args));
 };
@@ -19,6 +18,10 @@ export const initXPay = (
 	if (xpay === null) {
 		return null;
 	}
-	const XPay = { ...xpay, argsAPIKEY: args.alias, argsENVIRONMENT: args.isProduction };
+	const XPay = {
+		...xpay,
+		argsAPIKEY: args.alias,
+		argsENVIRONMENT: args.isProduction,
+	};
 	return XPay;
 };
