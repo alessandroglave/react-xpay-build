@@ -19,7 +19,7 @@ If you use an older version you need to upgrade React to use this library.
 
 ```jsx
 import React from 'react';
-import { loadXPay, XPayProvider } from 'react-xpay';
+import { loadXPay, XPayProvider } from 'react-xpay-build';
 
 const sdkLoader = loadXPay({
 	alias: 'YOUR_ALIAS',
@@ -53,7 +53,7 @@ const App = () => {
   **You need to pass a ref to the XPayCard component**
 
 ```jsx
-import { XPayCard, useCard } from "react-xpay";
+import { XPayCard, useCard } from "react-xpay-build";
 
 const YourCheckoutComponent = () => {
 	const cardRef = useRef(null);
@@ -101,7 +101,7 @@ const App = () => {
 - Pay with all available payment methods
 
 ```jsx
-import { XPayAPM } from "react-xpay";
+import { XPayAPM } from "react-xpay-build";
 
 const YourCheckoutComponent = () => {
 	return <XPayAPM />;
@@ -111,7 +111,7 @@ const YourCheckoutComponent = () => {
 - Show only APM buttons in the selected array
 
 ```jsx
-import { XPayAPM } from "react-xpay";
+import { XPayAPM } from "react-xpay-build";
 
 const YourCheckoutComponent = () => {
 	return <XPayAPM paymentMethodName={["SATISPAY", "PAYPAL"]} />;
@@ -121,7 +121,7 @@ const YourCheckoutComponent = () => {
 - Pick your selected APM buttons (e.g. to show them in different page sections)
 
 ```jsx
-import { XPayAPM } from "react-xpay";
+import { XPayAPM } from "react-xpay-build";
 
 const YourCheckoutComponent = () => {
 	return (
