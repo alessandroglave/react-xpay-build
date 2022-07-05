@@ -1,18 +1,17 @@
-import { useXPay } from "components/XPayProvider/XPayProvider";
-import React, {
-	useEffect,
-	useRef,
-	useState,
-} from "react";
+import { useXPay } from "components/XPayProvider";
+import React, { useEffect, useRef, useState } from "react";
 import { PaymentMethod } from "../../types";
 
 export interface PaymentMethodI {
 	/** optiona. A single payment method or and array of payment methods */
-	paymentMethodName?: PaymentMethod | PaymentMethod[]
-	style?: string
+	paymentMethodName?: PaymentMethod | PaymentMethod[];
+	style?: string;
 }
 
-export const XPayAPM = ({paymentMethodName = undefined, style = ''} : PaymentMethodI)=>{
+export const XPayAPM = ({
+	paymentMethodName = undefined,
+	style = "",
+}: PaymentMethodI) => {
 	const [isMounted, setIsMounted] = useState(false);
 	const initRef = useRef(false);
 	const XPayContext = useXPay();
@@ -36,16 +35,21 @@ export const XPayAPM = ({paymentMethodName = undefined, style = ''} : PaymentMet
 		}
 
 		initRef.current = true;
-		const btn = window.XPay.create(window.XPay.OPERATION_TYPES.PAYMENT_BUTTON, getNexiPaymentMethods(paymentMethodName));
+		const btn = window.XPay.create(
+			window.XPay.OPERATION_TYPES.PAYMENT_BUTTON,
+			getNexiPaymentMethods(paymentMethodName)
+		);
 		btn.mount(getDivName(paymentMethodName));
 	}, [isMounted, XPayContext.initialConfig]);
 
-	return (<div id={getDivName(paymentMethodName)}/>)
-}
+	return <div id={getDivName(paymentMethodName)} />;
+};
 
-function getNexiPaymentMethods(n?: undefined | PaymentMethod | PaymentMethod[]) {
-	return n ? Array.isArray(n) ? n : [n] : []
+function getNexiPaymentMethods(
+	n?: undefined | PaymentMethod | PaymentMethod[]
+) {
+	return n ? (Array.isArray(n) ? n : [n]) : [];
 }
 function getDivName(n?: undefined | PaymentMethod | PaymentMethod[]) {
-	return `react-XPay-${n ? Array.isArray(n) ? n.join('--') : n : 'APMS'}`
+	return `react-XPay-${n ? (Array.isArray(n) ? n.join("--") : n) : "APMS"}`;
 }
