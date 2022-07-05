@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { PaymentMethod } from "../../types";
 
 export interface PaymentMethodI {
-	/** optiona. A single payment method or and array of payment methods */
+	/** optional. A single payment method or and array of payment methods */
 	paymentMethodName?: PaymentMethod | PaymentMethod[];
 	style?: string;
 }
