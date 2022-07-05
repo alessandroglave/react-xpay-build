@@ -1,0 +1,70 @@
+{
+	"name": "react-xpay-build",
+	"version": "0.1.0",
+	"keywords": [],
+	"description": "React SDK for XPay Build",
+	"main": "dist/index.min.js",
+	"module": "dist/index.es.js",
+	"types": "dist/index.d.ts",
+	"files": [
+		"dist"
+	],
+	"author": "Alessandro Glave <alessandro.glave@gmail.com>",
+	"repository": {
+		"url": "https://github.com/alessandroglave/react-xpay-build",
+		"type": "git"
+	},
+	"homepage": "https://github.com/alessandroglave/react-xpay-build",
+	"license": "MIT",
+	"private": true,
+	"scripts": {
+		"start": "rollup -c rollup.config.js -w",
+		"clean": "rm -rf dist",
+		"build": "clean && tsc && rollup -c rollup.config.js && cp package.json README.md ./dist"
+	},
+	"engines": {
+		"node": ">=10",
+		"npm": ">=6"
+	},
+	"peerDependencies": {
+		"react": ">=16.8.0",
+		"react-dom": ">=16.8.0"
+	},
+	"devDependencies": {
+		"@types/node": "^16.10.3",
+		"@types/react": "^16.8.0",
+		"@types/react-dom": "^16.8.0",
+		"@typescript-eslint/eslint-plugin": "^4.33.0",
+		"@typescript-eslint/parser": "^4.33.0",
+		"eslint": "^7.32.0",
+		"eslint-config-prettier": "^8.3.0",
+		"eslint-config-standard": "^16.0.3",
+		"eslint-plugin-import": "^2.24.2",
+		"eslint-plugin-node": "^11.1.0",
+		"eslint-plugin-prettier": "^4.0.0",
+		"eslint-plugin-promise": "^5.1.0",
+		"eslint-plugin-react": "^7.26.1",
+		"eslint-plugin-react-hooks": "^4.2.0",
+		"eslint-plugin-standard": "^5.0.0",
+		"lint-staged": "^11.2.0",
+		"postcss": "^8.3.9",
+		"prettier": "^2.4.1",
+		"rollup": "^2.58.0",
+		"rollup-plugin-commonjs": "^10.1.0",
+		"rollup-plugin-json": "^4.0.0",
+		"rollup-plugin-node-resolve": "^5.2.0",
+		"rollup-plugin-peer-deps-external": "^2.2.4",
+		"rollup-plugin-postcss": "^4.0.1",
+		"rollup-plugin-sourcemaps": "^0.6.3",
+		"rollup-plugin-terser": "^7.0.2",
+		"rollup-plugin-typescript2": "^0.30.0",
+		"ts-node": "^10.2.1",
+		"typescript": "^4.4.3"
+	},
+	"lint-staged": {
+		"src/**/*.{ts,tsx}": [
+			"./node_modules/.bin/prettier --write",
+			"./node_modules/.bin/eslint"
+		]
+	}
+}
