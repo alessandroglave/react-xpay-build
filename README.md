@@ -55,24 +55,22 @@ const App = () => {
 import { XPayCard, useCard } from "react-xpay-build";
 
 const YourCheckoutComponent = () => {
-	const cardRef = useRef(null);
+  const cardRef = useRef(null);
+  const handlePayWithComponent = () => {
+  	cardRef.current.createNonce();
+  };
+  const { pay } = useCard();
+  const handlePayWithHelperFx = useCallback(() => {
+  	pay(cardRef);
+  }, [cardRef]);
 
-	const handlePayWithComponent = () => {
-		cardRef.current.createNonce();
-	};
-
-	const { pay } = useCard();
-	const handlePayWithHelperFx = useCallback(() => {
-		pay(cardRef);
-	}, [cardRef]);
-
-	return (
-		<>
-			<XPayCard ref={cardRef} />
-			<button onClick={handlePayWithHelperFx}>Pay</button>
-			<button onClick={handlePayWithComponent}>Or use this Pay button</button>
-		</>
-	);
+  return (
+	<>
+	  <XPayCard ref={cardRef} />
+	  <button onClick={handlePayWithHelperFx}>Pay</button>
+	  <button onClick={handlePayWithComponent}>Or use this Pay button</button>
+	</>
+  );
 };
 ```
 
@@ -84,16 +82,16 @@ const YourCheckoutComponent = () => {
 
 ```jsx
 const App = () => {
-	return (
-		<XPayProvider
-			sdk={sdkLoader}
-			apiKey="YOUR_ALIAS"
-			order={order}
-			paymentResultHandler={paymentResultHandler}
-		>
-			<YourCheckoutComponent />
-		</XPayProvider>
-	);
+  return (
+    <XPayProvider
+  	  sdk={sdkLoader}
+  	  apiKey="YOUR_ALIAS"
+  	  order={order}
+  	  paymentResultHandler={paymentResultHandler}
+    >
+  	  <YourCheckoutComponent />
+    </XPayProvider>
+  );
 };
 ```
 
@@ -103,7 +101,7 @@ const App = () => {
 import { XPayAPM } from "react-xpay-build";
 
 const YourCheckoutComponent = () => {
-	return <XPayAPM />;
+  return <XPayAPM />;
 };
 ```
 
@@ -113,7 +111,7 @@ const YourCheckoutComponent = () => {
 import { XPayAPM } from "react-xpay-build";
 
 const YourCheckoutComponent = () => {
-	return <XPayAPM paymentMethodName={["SATISPAY", "PAYPAL"]} />;
+  return <XPayAPM paymentMethodName={["SATISPAY", "PAYPAL"]} />;
 };
 ```
 
@@ -123,15 +121,15 @@ const YourCheckoutComponent = () => {
 import { XPayAPM } from "react-xpay-build";
 
 const YourCheckoutComponent = () => {
-	return (
-		<>
-			<div style={{ paddingBottom: "20px" }}>
-				<XPayAPM paymentMethodName="PAYPAL" />
-			</div>
-			<XPayAPM paymentMethodName="AMAZONPAY" />
-			<XPayAPM paymentMethodName="SATISPAY" />
-		</>
-	);
+  return (
+  <>
+    <div style={{ paddingBottom: "20px" }}>
+      <XPayAPM paymentMethodName="PAYPAL" />
+    </div>
+    <XPayAPM paymentMethodName="AMAZONPAY" />
+    <XPayAPM paymentMethodName="SATISPAY" />
+  </>
+  );
 };
 ```
 
@@ -143,29 +141,29 @@ Properties into the `main` object will be appended to tha main config object.
 
 ```jsx
 const customConfig = {
-	main: {
-		requestType: "AN",
-		serviceType: "AN",
-	},
-	baseConfig: {},
-	paymentParams: {},
-	customParams: {
-		num_contratto: "123",
-	},
-	language: "ITA",
+  main: {
+    requestType: "AN",
+    serviceType: "AN",
+  },
+  baseConfig: {},
+  paymentParams: {},
+  customParams: {
+    num_contratto: "123",
+  },
+  language: "ITA",
 };
 
 const App = () => {
-	return (
-		<XPayProvider
-			sdk={sdkLoader}
-			apiKey="YOUR_ALIAS"
-			order={order}
-			paymentResultHandler={paymentResultHandler}
-			customConfig={customConfig}
-		>
-			<YourCheckoutComponent />
-		</XPayProvider>
+  return (
+    <XPayProvider
+      sdk={sdkLoader}
+      apiKey="YOUR_ALIAS"
+      order={order}
+      paymentResultHandler={paymentResultHandler}
+      customConfig={customConfig}
+    >
+      <YourCheckoutComponent />
+    </XPayProvider>
 	);
 };
 ```

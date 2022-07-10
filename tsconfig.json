@@ -28,6 +28,6 @@
 			}
 		]
 	},
-	"include": ["src/**/*", "types/index.d.ts"],
+	"include": ["src/**/*"],
 	"exclude": ["node_modules", "dist"]
 }

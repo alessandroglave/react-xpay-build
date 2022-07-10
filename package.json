@@ -1,6 +1,6 @@
 {
 	"name": "react-xpay-build",
-	"version": "1.0.6",
+	"version": "1.0.7",
 	"keywords": [
 		"XPay",
 		"react"
@@ -10,9 +10,7 @@
 	"module": "dist/index.esm.js",
 	"types": "dist/index.d.ts",
 	"files": [
-		"dist",
-		"src",
-		"types"
+		"dist"
 	],
 	"author": "Alessandro Glave <alessandro.glave@gmail.com>",
 	"repository": {
