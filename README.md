@@ -22,25 +22,25 @@ import React from "react";
 import { loadXPay, XPayProvider } from "react-xpay-build";
 
 const sdkLoader = loadXPay({
-	alias: "YOUR_ALIAS",
-	isProduction: false,
+  alias: "YOUR_ALIAS",
+  isProduction: false,
 });
 
 const App = () => {
-	const nonceHandler = (_nonceResp) => {
-		// submit nonce response data to your backend
-		// to pay with the server-to-server integration
-	};
-	return (
-		<XPayProvider
-			sdk={sdkLoader}
-			apiKey="YOUR_ALIAS"
-			order={order}
-			nonceHandler={nonceHandler}
-		>
-			<YourCheckoutComponent />
-		</XPayProvider>
-	);
+  const nonceHandler = (_nonceResp) => {
+    // submit nonce response data to your backend
+    // to pay with the server-to-server integration
+  };
+  return (
+    <XPayProvider
+      sdk={sdkLoader}
+      apiKey="YOUR_ALIAS"
+      order={order}
+      nonceHandler={nonceHandler}
+    >
+    <YourCheckoutComponent />
+    </XPayProvider>
+  );
 };
 ```
 
@@ -73,6 +73,55 @@ const YourCheckoutComponent = () => {
   );
 };
 ```
+
+You can pass a style prop to `XPayCard` component to customize input forms.
+
+XPay Build does not support all css properties (e.g. `backgroundColor` or `border`), you'll find available ones on `style` prop type.
+
+Here is an example of available properties.
+
+```jsx
+const style = {                  
+  "common": {
+    "fontFamily": "Arial",
+    "fontSize": "15px",
+    "fontStyle": "Normal",
+    "fontVariant": "Normal",
+    "letterSpacing": "1px",
+    "::placeholder": {
+    "color": "#d41111"
+    },
+    "color": "#5c5c5c"
+  },
+  "correct": {
+    "fontFamily": "Arial",
+    "fontSize": "15px",
+    "fontStyle": "Normal",
+    "fontVariant": "Normal",
+    "letterSpacing": "1px",
+    "::placeholder": {
+    "color": "#d41111"
+    },
+    "color": "#5c5c5c"
+  },
+  "error": {
+    "fontFamily": "Arial",
+    "fontSize": "15px",
+    "fontStyle": "Normal",
+    "fontVariant": "Normal",
+    "letterSpacing": "1px",
+    "::placeholder": {
+    "color": "#d41111"
+    },
+    "color": "#5c5c5c"
+  }                        
+};
+
+<XPayCard ref={cardRef} style={style} />
+```
+
+
+
 
 ### Pay with Alternate Payment Methods (APM)
 
