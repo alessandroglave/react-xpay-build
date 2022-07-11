@@ -102,6 +102,19 @@ export interface CustomConfigI {
 	language?: Languages;
 }
 
-/* export interface XPaySdkConstructor {
-	({alias: string, isProduction: boolean, url?: string}): XPay;
-} */
+export interface XPayCardStyle {
+	common?: XPayCardAvailableStyles,
+	correct?: XPayCardAvailableStyles,
+	error?: XPayCardAvailableStyles,
+}
+
+export interface XPayCardAvailableStyles {
+	fontFamily?: string,
+	fontSize?: string | number,
+	fontStyle?: string,
+	letterSpacing?: string | number,
+	"::placeholder"?: {
+		color?: string | number
+	},
+	color?: string | number
+}

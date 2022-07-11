@@ -6,8 +6,11 @@ import React, {
 	useRef,
 	useState,
 } from "react";
+import { XPayCardStyle } from "types";
 
 interface IProps {
+	/** XPay Build style object **/
+	style?: XPayCardStyle | null;
 	/** Defaults `true`. Use `showError = false` to hide library errors. **/
 	showErrors?: boolean;
 	/** With `showError = false` you can pass a handler to set errors in your component **/
@@ -19,7 +22,7 @@ interface IProps {
  * @prop cardErrorHandler
  **/
 export const XPayCard = forwardRef<unknown, IProps>(
-	({ showErrors = true, cardErrorHandler = null }, ref) => {
+	({ style = null, showErrors = true, cardErrorHandler = null }, ref) => {
 		const cardErrors = useRef(null);
 		const [isMounted, setIsMounted] = useState(false);
 		const XPayContext = useXPay();
@@ -45,7 +48,7 @@ export const XPayCard = forwardRef<unknown, IProps>(
 			}
 
 			initRef.current = true;
-			const carddiv = window.XPay.create(window.XPay.OPERATION_TYPES.CARD);
+			const carddiv = style ? window.XPay.create(window.XPay.OPERATION_TYPES.CARD, style) : window.XPay.create(window.XPay.OPERATION_TYPES.CARD);
 			cardRef.current = carddiv;
 			carddiv.mount("react-xpay-card");
 		}, [isMounted, XPayContext.initialConfig]);
