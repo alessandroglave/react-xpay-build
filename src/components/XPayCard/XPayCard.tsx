@@ -6,7 +6,12 @@ import React, {
 	useRef,
 	useState,
 } from "react";
-import { CardType, CardTypes, XPayCardStyle } from "types";
+import {
+	CardType,
+	CardTypes,
+	GenericReactComponent,
+	XPayCardStyle,
+} from "types";
 
 export interface XPayCardProps {
 	/** XPay Build card type. Defaults to `single` */
@@ -15,6 +20,16 @@ export interface XPayCardProps {
 	style?: XPayCardStyle | null;
 	/** React style object applied to wrapper div **/
 	styleWrapper?: React.CSSProperties | null;
+	/** React style object applied to wrapper divs **/
+	styleSplitted?: {
+		pan: React.CSSProperties | null;
+		expiry: React.CSSProperties | null;
+		ccv: React.CSSProperties | null;
+	};
+	/** React components: splitted form labels */
+	labelPan: GenericReactComponent | null;
+	labelExpiry: GenericReactComponent | null;
+	labelCCV: GenericReactComponent | null;
 	/** React style object applied to errors div **/
 	styleErrors?: React.CSSProperties | null;
 	/** Defaults `true`. Use `showError = false` to hide library errors. **/
@@ -35,6 +50,10 @@ export const XPayCard = forwardRef<unknown, XPayCardProps>(
 			styleWrapper = null,
 			styleErrors = null,
 			showErrors = true,
+			styleSplitted = null,
+			labelPan = null,
+			labelExpiry = null,
+			labelCCV = null,
 			cardErrorHandler = null,
 		},
 		ref
@@ -103,9 +122,27 @@ export const XPayCard = forwardRef<unknown, XPayCardProps>(
 				></div>
 				{type === CardTypes.SPLIT && (
 					<div>
-						<div id="react-xpay-pan"></div>
-						<div id="react-xpay-expiry"></div>
-						<div id="react-xpay-ccv"></div>
+						{labelPan && labelPan}
+						<div
+							id="react-xpay-pan"
+							{...(styleSplitted?.pan && {
+								style: styleSplitted.pan,
+							})}
+						></div>
+						{labelExpiry && labelExpiry}
+						<div
+							id="react-xpay-expiry"
+							{...(styleSplitted?.expiry && {
+								style: styleSplitted.expiry,
+							})}
+						></div>
+						{labelCCV && labelCCV}
+						<div
+							id="react-xpay-ccv"
+							{...(styleSplitted?.ccv && {
+								style: styleSplitted.ccv,
+							})}
+						></div>
 					</div>
 				)}
 				{showErrors && cardErrors && cardErrors?.current && (
