@@ -6,11 +6,11 @@ import React, {
 	useRef,
 	useState,
 } from "react";
-import { CardTypes, XPayCardStyle } from "types";
+import { CardType, CardTypes, XPayCardStyle } from "types";
 
 export interface XPayCardProps {
 	/** XPay Build card type. Defaults to `single` */
-	type?: CardTypes
+	type?: CardType | undefined;
 	/** XPay Build style object **/
 	style?: XPayCardStyle | null;
 	/** React style object applied to wrapper div **/
@@ -64,12 +64,12 @@ export const XPayCard = forwardRef<unknown, XPayCardProps>(
 			}
 
 			initRef.current = true;
-			const carddiv = createCardWrapper(style, type)
+			const carddiv = createCardWrapper(style, type);
 			cardRef.current = carddiv;
-			if(type === CardTypes.CARD) {
+			if (type === CardTypes.CARD) {
 				carddiv.mount("react-xpay-card");
 			} else {
-				carddiv.mount("react-xpay-pan","react-xpay-expiry","react-xpay-ccv");
+				carddiv.mount("react-xpay-pan", "react-xpay-expiry", "react-xpay-ccv");
 			}
 		}, [isMounted, XPayContext.initialConfig]);
 
@@ -100,13 +100,14 @@ export const XPayCard = forwardRef<unknown, XPayCardProps>(
 					id="react-xpay-card"
 					ref={cardRef}
 					{...(styleWrapper && { style: styleWrapper })}
-				>
-				</div>
-					{ type === CardTypes.SPLIT && (<div>
-						<div id="raact-xpay-pan"></div>
-						<div id="raact-xpay-expiry"></div>
-						<div id="raact-xpay-ccv"></div>
-					</div>)}
+				></div>
+				{type === CardTypes.SPLIT && (
+					<div>
+						<div id="react-xpay-pan"></div>
+						<div id="react-xpay-expiry"></div>
+						<div id="react-xpay-ccv"></div>
+					</div>
+				)}
 				{showErrors && cardErrors && cardErrors?.current && (
 					<div {...(styleErrors && { style: styleErrors })}>
 						{cardErrors.current}
@@ -123,11 +124,13 @@ export const useCard = () => {
 	};
 };
 
-const createCardWrapper = (style: XPayCardStyle | null, type: CardTypes) => {
-	if(type === CardTypes.CARD) {
-		return style ? window.XPay.create(window.XPay.OPERATION_TYPES.CARD, style)
-		: window.XPay.create(window.XPay.OPERATION_TYPES.CARD);
+const createCardWrapper = (style: XPayCardStyle | null, type: CardType) => {
+	if (type === CardTypes.CARD) {
+		return style
+			? window.XPay.create(window.XPay.OPERATION_TYPES.CARD, style)
+			: window.XPay.create(window.XPay.OPERATION_TYPES.CARD);
 	}
-	return style ? window.XPay.create(window.XPay.OPERATION_TYPES.SPLIT_CARD, style)
-	: window.XPay.create(window.XPay.OPERATION_TYPES.SPLIT_CARD);
-} 
+	return style
+		? window.XPay.create(window.XPay.OPERATION_TYPES.SPLIT_CARD, style)
+		: window.XPay.create(window.XPay.OPERATION_TYPES.SPLIT_CARD);
+};
