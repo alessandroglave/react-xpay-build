@@ -123,7 +123,7 @@ export enum CardTypes {
 	CARD = "card",
 	SPLIT = "split",
 }
-export type CardType = CardTypes.CARD | CardTypes.SPLIT;
+export type CardType = "card" | "split";
 
 export type GenericReactComponent =
 	| React.FC
@@ -134,3 +134,15 @@ export type GenericReactComponent =
 	| React.Component[]
 	| JSX.Element
 	| JSX.Element[];
+
+export interface StyleSplittedI {
+	wrapper?: React.CSSProperties | null;
+	pan?: StyleSplittedIField;
+	expiry?: StyleSplittedIField;
+	cvc?: StyleSplittedIField;
+}
+
+export interface StyleSplittedIField {
+	wrapper?: React.CSSProperties | null;
+	input?: React.CSSProperties | null;
+}

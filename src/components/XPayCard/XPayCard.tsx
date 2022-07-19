@@ -10,26 +10,23 @@ import {
 	CardType,
 	CardTypes,
 	GenericReactComponent,
+	StyleSplittedI,
 	XPayCardStyle,
 } from "types";
 
 export interface XPayCardProps {
 	/** XPay Build card type. Defaults to `single` */
-	type?: CardType | undefined;
+	cardType?: CardType | undefined;
 	/** XPay Build style object **/
 	style?: XPayCardStyle | null;
 	/** React style object applied to wrapper div **/
 	styleWrapper?: React.CSSProperties | null;
 	/** React style object applied to wrapper divs **/
-	styleSplitted?: {
-		pan: React.CSSProperties | null;
-		expiry: React.CSSProperties | null;
-		ccv: React.CSSProperties | null;
-	};
+	styleSplitted?: StyleSplittedI;
 	/** React components: splitted form labels */
-	labelPan: GenericReactComponent | null;
-	labelExpiry: GenericReactComponent | null;
-	labelCCV: GenericReactComponent | null;
+	labelPan?: GenericReactComponent | null;
+	labelExpiry?: GenericReactComponent | null;
+	labelCVC?: GenericReactComponent | null;
 	/** React style object applied to errors div **/
 	styleErrors?: React.CSSProperties | null;
 	/** Defaults `true`. Use `showError = false` to hide library errors. **/
@@ -45,7 +42,7 @@ export interface XPayCardProps {
 export const XPayCard = forwardRef<unknown, XPayCardProps>(
 	(
 		{
-			type = CardTypes.CARD,
+			cardType = CardTypes.CARD,
 			style = null,
 			styleWrapper = null,
 			styleErrors = null,
@@ -53,7 +50,7 @@ export const XPayCard = forwardRef<unknown, XPayCardProps>(
 			styleSplitted = null,
 			labelPan = null,
 			labelExpiry = null,
-			labelCCV = null,
+			labelCVC = null,
 			cardErrorHandler = null,
 		},
 		ref
@@ -83,12 +80,12 @@ export const XPayCard = forwardRef<unknown, XPayCardProps>(
 			}
 
 			initRef.current = true;
-			const carddiv = createCardWrapper(style, type);
+			const carddiv = createCardWrapper(style, cardType);
 			cardRef.current = carddiv;
-			if (type === CardTypes.CARD) {
+			if (cardType === CardTypes.CARD) {
 				carddiv.mount("react-xpay-card");
 			} else {
-				carddiv.mount("react-xpay-pan", "react-xpay-expiry", "react-xpay-ccv");
+				carddiv.mount("react-xpay-pan", "react-xpay-expiry", "react-xpay-cvc");
 			}
 		}, [isMounted, XPayContext.initialConfig]);
 
@@ -120,29 +117,51 @@ export const XPayCard = forwardRef<unknown, XPayCardProps>(
 					ref={cardRef}
 					{...(styleWrapper && { style: styleWrapper })}
 				></div>
-				{type === CardTypes.SPLIT && (
-					<div>
-						{labelPan && labelPan}
+				{cardType === CardTypes.SPLIT && (
+					<div
+						{...(styleSplitted?.wrapper && {
+							style: styleSplitted.wrapper,
+						})}
+					>
 						<div
-							id="react-xpay-pan"
-							{...(styleSplitted?.pan && {
-								style: styleSplitted.pan,
+							{...(styleSplitted?.pan?.wrapper && {
+								style: styleSplitted.pan?.wrapper,
 							})}
-						></div>
-						{labelExpiry && labelExpiry}
+						>
+							{labelPan && labelPan}
+							<div
+								id="react-xpay-pan"
+								{...(styleSplitted?.pan?.input && {
+									style: styleSplitted.pan?.input,
+								})}
+							></div>
+						</div>
 						<div
-							id="react-xpay-expiry"
-							{...(styleSplitted?.expiry && {
-								style: styleSplitted.expiry,
+							{...(styleSplitted?.expiry?.wrapper && {
+								style: styleSplitted.expiry?.wrapper,
 							})}
-						></div>
-						{labelCCV && labelCCV}
+						>
+							{labelExpiry && labelExpiry}
+							<div
+								id="react-xpay-expiry"
+								{...(styleSplitted?.expiry?.input && {
+									style: styleSplitted.expiry?.input,
+								})}
+							></div>
+						</div>
 						<div
-							id="react-xpay-ccv"
-							{...(styleSplitted?.ccv && {
-								style: styleSplitted.ccv,
+							{...(styleSplitted?.cvc?.wrapper && {
+								style: styleSplitted.cvc?.wrapper,
 							})}
-						></div>
+						>
+							{labelCVC && labelCVC}
+							<div
+								id="react-xpay-cvc"
+								{...(styleSplitted?.cvc?.input && {
+									style: styleSplitted.cvc?.input,
+								})}
+							/>
+						</div>
 					</div>
 				)}
 				{showErrors && cardErrors && cardErrors?.current && (
@@ -161,8 +180,8 @@ export const useCard = () => {
 	};
 };
 
-const createCardWrapper = (style: XPayCardStyle | null, type: CardType) => {
-	if (type === CardTypes.CARD) {
+const createCardWrapper = (style: XPayCardStyle | null, cardType: CardType) => {
+	if (cardType === CardTypes.CARD) {
 		return style
 			? window.XPay.create(window.XPay.OPERATION_TYPES.CARD, style)
 			: window.XPay.create(window.XPay.OPERATION_TYPES.CARD);
