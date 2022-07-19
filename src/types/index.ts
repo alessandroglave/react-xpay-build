@@ -103,23 +103,24 @@ export interface CustomConfigI {
 }
 
 export interface XPayCardStyle {
-	common?: XPayCardAvailableStyles,
-	correct?: XPayCardAvailableStyles,
-	error?: XPayCardAvailableStyles,
+	common?: XPayCardAvailableStyles;
+	correct?: XPayCardAvailableStyles;
+	error?: XPayCardAvailableStyles;
 }
 
 export interface XPayCardAvailableStyles {
-	fontFamily?: string,
-	fontSize?: string | number,
-	fontStyle?: string,
-	letterSpacing?: string | number,
+	fontFamily?: string;
+	fontSize?: string | number;
+	fontStyle?: string;
+	letterSpacing?: string | number;
 	"::placeholder"?: {
-		color?: string | number
-	},
-	color?: string | number
+		color?: string | number;
+	};
+	color?: string | number;
 }
 
 export enum CardTypes {
-	CARD = 'card',
-	SPLIT = 'split'
+	CARD = "card",
+	SPLIT = "split",
 }
+export type CardType = CardTypes.CARD | CardTypes.SPLIT;
