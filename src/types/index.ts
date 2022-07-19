@@ -124,3 +124,13 @@ export enum CardTypes {
 	SPLIT = "split",
 }
 export type CardType = CardTypes.CARD | CardTypes.SPLIT;
+
+export type GenericReactComponent =
+	| React.FC
+	| React.FC[]
+	| React.ReactNode
+	| React.ReactNode[]
+	| React.Component
+	| React.Component[]
+	| JSX.Element
+	| JSX.Element[];
