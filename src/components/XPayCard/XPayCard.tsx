@@ -8,9 +8,13 @@ import React, {
 } from "react";
 import { XPayCardStyle } from "types";
 
-interface IProps {
+export interface XPayCardProps {
 	/** XPay Build style object **/
 	style?: XPayCardStyle | null;
+	/** React style object applied to wrapper div **/
+	styleWrapper?: React.CSSProperties | null;
+	/** React style object applied to errors div **/
+	styleErrors?: React.CSSProperties | null;
 	/** Defaults `true`. Use `showError = false` to hide library errors. **/
 	showErrors?: boolean;
 	/** With `showError = false` you can pass a handler to set errors in your component **/
@@ -21,8 +25,17 @@ interface IProps {
  * @prop showErrors
  * @prop cardErrorHandler
  **/
-export const XPayCard = forwardRef<unknown, IProps>(
-	({ style = null, showErrors = true, cardErrorHandler = null }, ref) => {
+export const XPayCard = forwardRef<unknown, XPayCardProps>(
+	(
+		{
+			style = null,
+			styleWrapper = null,
+			styleErrors = null,
+			showErrors = true,
+			cardErrorHandler = null,
+		},
+		ref
+	) => {
 		const cardErrors = useRef(null);
 		const [isMounted, setIsMounted] = useState(false);
 		const XPayContext = useXPay();
@@ -48,7 +61,9 @@ export const XPayCard = forwardRef<unknown, IProps>(
 			}
 
 			initRef.current = true;
-			const carddiv = style ? window.XPay.create(window.XPay.OPERATION_TYPES.CARD, style) : window.XPay.create(window.XPay.OPERATION_TYPES.CARD);
+			const carddiv = style
+				? window.XPay.create(window.XPay.OPERATION_TYPES.CARD, style)
+				: window.XPay.create(window.XPay.OPERATION_TYPES.CARD);
 			cardRef.current = carddiv;
 			carddiv.mount("react-xpay-card");
 		}, [isMounted, XPayContext.initialConfig]);
@@ -76,9 +91,15 @@ export const XPayCard = forwardRef<unknown, IProps>(
 
 		return (
 			<>
-				<div id="react-xpay-card" ref={cardRef}></div>
+				<div
+					id="react-xpay-card"
+					ref={cardRef}
+					{...(styleWrapper && { style: styleWrapper })}
+				></div>
 				{showErrors && cardErrors && cardErrors?.current && (
-					<div>{cardErrors.current}</div>
+					<div {...(styleErrors && { style: styleErrors })}>
+						{cardErrors.current}
+					</div>
 				)}
 			</>
 		);
