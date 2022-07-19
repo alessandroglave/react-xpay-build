@@ -27,9 +27,9 @@ export interface XPayCardProps {
 		ccv: React.CSSProperties | null;
 	};
 	/** React components: splitted form labels */
-	labelPan: GenericReactComponent | null;
-	labelExpiry: GenericReactComponent | null;
-	labelCCV: GenericReactComponent | null;
+	labelPan?: GenericReactComponent | null;
+	labelExpiry?: GenericReactComponent | null;
+	labelCCV?: GenericReactComponent | null;
 	/** React style object applied to errors div **/
 	styleErrors?: React.CSSProperties | null;
 	/** Defaults `true`. Use `showError = false` to hide library errors. **/
