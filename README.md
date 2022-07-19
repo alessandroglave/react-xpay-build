@@ -22,29 +22,29 @@ import React from "react";
 import { loadXPay, XPayProvider } from "react-xpay-build";
 
 const sdkLoader = loadXPay({
-  alias: "YOUR_ALIAS",
-  isProduction: false,
+	alias: "YOUR_ALIAS",
+	isProduction: false,
 });
 
 const App = () => {
-  const nonceHandler = (_nonceResp) => {
-    // submit nonce response data to your backend
-    // to pay with the server-to-server integration
-  };
-  return (
-    <XPayProvider
-      sdk={sdkLoader}
-      apiKey="YOUR_ALIAS"
-      order={order}
-      nonceHandler={nonceHandler}
-    >
-    <YourCheckoutComponent />
-    </XPayProvider>
-  );
+	const nonceHandler = (_nonceResp) => {
+		// submit nonce response data to your backend
+		// to pay with the server-to-server integration
+	};
+	return (
+		<XPayProvider
+			sdk={sdkLoader}
+			apiKey="YOUR_ALIAS"
+			order={order}
+			nonceHandler={nonceHandler}
+		>
+			<YourCheckoutComponent />
+		</XPayProvider>
+	);
 };
 ```
 
-### Pay with card
+## Pay with card
 
 - In your checkout component you can use the `XPayCard` component to show XPay's card input.
 
@@ -55,24 +55,28 @@ const App = () => {
 import { XPayCard, useCard } from "react-xpay-build";
 
 const YourCheckoutComponent = () => {
-  const cardRef = useRef(null);
-  const handlePayWithComponent = () => {
-  	cardRef.current.createNonce();
-  };
-  const { pay } = useCard();
-  const handlePayWithHelperFx = useCallback(() => {
-  	pay(cardRef);
-  }, [cardRef]);
+	const cardRef = useRef(null);
+	const handlePayWithComponent = () => {
+		cardRef.current.createNonce();
+	};
+	const { pay } = useCard();
+	const handlePayWithHelperFx = useCallback(() => {
+		pay(cardRef);
+	}, [cardRef]);
 
-  return (
-	<>
-	  <XPayCard ref={cardRef} />
-	  <button onClick={handlePayWithHelperFx}>Pay</button>
-	  <button onClick={handlePayWithComponent}>Or use this Pay button</button>
-	</>
-  );
+	return (
+		<>
+			<XPayCard ref={cardRef} />
+			<button onClick={handlePayWithHelperFx}>Pay</button>
+			<button onClick={handlePayWithComponent}>Or use this Pay button</button>
+		</>
+	);
 };
 ```
+
+## Customizing card component
+
+### XPay Card
 
 You can pass a style prop to `XPayCard` component to customize input forms.
 
@@ -81,47 +85,81 @@ XPay Build does not support all css properties (e.g. `backgroundColor` or `borde
 Here is an example of available properties.
 
 ```jsx
-const style = {                  
-  "common": {
-    "fontFamily": "Arial",
-    "fontSize": "15px",
-    "fontStyle": "Normal",
-    "fontVariant": "Normal",
-    "letterSpacing": "1px",
-    "::placeholder": {
-    "color": "#d41111"
-    },
-    "color": "#5c5c5c"
-  },
-  "correct": {
-    "fontFamily": "Arial",
-    "fontSize": "15px",
-    "fontStyle": "Normal",
-    "fontVariant": "Normal",
-    "letterSpacing": "1px",
-    "::placeholder": {
-    "color": "#d41111"
-    },
-    "color": "#5c5c5c"
-  },
-  "error": {
-    "fontFamily": "Arial",
-    "fontSize": "15px",
-    "fontStyle": "Normal",
-    "fontVariant": "Normal",
-    "letterSpacing": "1px",
-    "::placeholder": {
-    "color": "#d41111"
-    },
-    "color": "#5c5c5c"
-  }                        
+const style = {
+	common: {
+		fontFamily: "Arial",
+		fontSize: "15px",
+		fontStyle: "Normal",
+		fontVariant: "Normal",
+		letterSpacing: "1px",
+		"::placeholder": {
+			color: "#d41111",
+		},
+		color: "#5c5c5c",
+	},
+	correct: {
+		fontFamily: "Arial",
+		fontSize: "15px",
+		fontStyle: "Normal",
+		fontVariant: "Normal",
+		letterSpacing: "1px",
+		"::placeholder": {
+			color: "#d41111",
+		},
+		color: "#5c5c5c",
+	},
+	error: {
+		fontFamily: "Arial",
+		fontSize: "15px",
+		fontStyle: "Normal",
+		fontVariant: "Normal",
+		letterSpacing: "1px",
+		"::placeholder": {
+			color: "#d41111",
+		},
+		color: "#5c5c5c",
+	},
 };
 
-<XPayCard ref={cardRef} style={style} />
+<XPayCard ref={cardRef} style={style} />;
 ```
 
+### Customizing card's wrapper div
 
+You can pass a react style object prop `styleWrapper` to `XPayCard` to customize the card's wrapper div.
 
+```jsx
+const Component = () => {
+	return <XPayCard ref={cardRef} styleWrapper={{ background: "#ccc" }} />;
+};
+```
+
+### Card errors
+
+By default card errors are enabled.
+
+You can style errors with `styleErrors` property
+
+```jsx
+const Component = () => {
+	return <XPayCard ref={cardRef} styleErrors={{ color: "red" }} />;
+};
+```
+
+You can hide default errors and pass an handler that will be called on `XPay_Card_Error` event, to handle your own errors (e.g. to trigger an alert/toast with the error message)
+
+```jsx
+const Component = () => {
+	const cardErrorHandler = (msg: string) => alert(msg);
+	return (
+		<XPayCard
+			ref={cardRef}
+			showErrors={false}
+			cardErrorHandler={cardErrorHandler}
+		/>
+	);
+};
+```
 
 ### Pay with Alternate Payment Methods (APM)
 
@@ -131,16 +169,16 @@ const style = {
 
 ```jsx
 const App = () => {
-  return (
-    <XPayProvider
-  	  sdk={sdkLoader}
-  	  apiKey="YOUR_ALIAS"
-  	  order={order}
-  	  paymentResultHandler={paymentResultHandler}
-    >
-  	  <YourCheckoutComponent />
-    </XPayProvider>
-  );
+	return (
+		<XPayProvider
+			sdk={sdkLoader}
+			apiKey="YOUR_ALIAS"
+			order={order}
+			paymentResultHandler={paymentResultHandler}
+		>
+			<YourCheckoutComponent />
+		</XPayProvider>
+	);
 };
 ```
 
@@ -150,7 +188,7 @@ const App = () => {
 import { XPayAPM } from "react-xpay-build";
 
 const YourCheckoutComponent = () => {
-  return <XPayAPM />;
+	return <XPayAPM />;
 };
 ```
 
@@ -160,7 +198,7 @@ const YourCheckoutComponent = () => {
 import { XPayAPM } from "react-xpay-build";
 
 const YourCheckoutComponent = () => {
-  return <XPayAPM paymentMethodName={["SATISPAY", "PAYPAL"]} />;
+	return <XPayAPM paymentMethodName={["SATISPAY", "PAYPAL"]} />;
 };
 ```
 
@@ -170,15 +208,15 @@ const YourCheckoutComponent = () => {
 import { XPayAPM } from "react-xpay-build";
 
 const YourCheckoutComponent = () => {
-  return (
-  <>
-    <div style={{ paddingBottom: "20px" }}>
-      <XPayAPM paymentMethodName="PAYPAL" />
-    </div>
-    <XPayAPM paymentMethodName="AMAZONPAY" />
-    <XPayAPM paymentMethodName="SATISPAY" />
-  </>
-  );
+	return (
+		<>
+			<div style={{ paddingBottom: "20px" }}>
+				<XPayAPM paymentMethodName="PAYPAL" />
+			</div>
+			<XPayAPM paymentMethodName="AMAZONPAY" />
+			<XPayAPM paymentMethodName="SATISPAY" />
+		</>
+	);
 };
 ```
 
@@ -190,29 +228,29 @@ Properties into the `main` object will be appended to tha main config object.
 
 ```jsx
 const customConfig = {
-  main: {
-    requestType: "AN",
-    serviceType: "AN",
-  },
-  baseConfig: {},
-  paymentParams: {},
-  customParams: {
-    num_contratto: "123",
-  },
-  language: "ITA",
+	main: {
+		requestType: "AN",
+		serviceType: "AN",
+	},
+	baseConfig: {},
+	paymentParams: {},
+	customParams: {
+		num_contratto: "123",
+	},
+	language: "ITA",
 };
 
 const App = () => {
-  return (
-    <XPayProvider
-      sdk={sdkLoader}
-      apiKey="YOUR_ALIAS"
-      order={order}
-      paymentResultHandler={paymentResultHandler}
-      customConfig={customConfig}
-    >
-      <YourCheckoutComponent />
-    </XPayProvider>
+	return (
+		<XPayProvider
+			sdk={sdkLoader}
+			apiKey="YOUR_ALIAS"
+			order={order}
+			paymentResultHandler={paymentResultHandler}
+			customConfig={customConfig}
+		>
+			<YourCheckoutComponent />
+		</XPayProvider>
 	);
 };
 ```
