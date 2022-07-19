@@ -118,3 +118,8 @@ export interface XPayCardAvailableStyles {
 	},
 	color?: string | number
 }
+
+export enum CardTypes {
+	CARD = 'card',
+	SPLIT = 'split'
+}
