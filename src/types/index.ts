@@ -52,7 +52,8 @@ export enum Languages {
 export type PaymentMethod =
 	| "APPLEPAY"
 	| "AMAZONPAY"
-	| "MY_BANK"
+	| "MYBANK"
+	| "NEXIPAY"
 	| "SCT"
 	| "ALIPAY"
 	| "WECHATPAY"
