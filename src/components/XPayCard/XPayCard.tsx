@@ -55,7 +55,7 @@ export const XPayCard = forwardRef<unknown, XPayCardProps>(
 		},
 		ref
 	) => {
-		const cardErrors = useRef(null);
+		const [cardErrors, setCardErrors] = useState(null);
 		const [isMounted, setIsMounted] = useState(false);
 		const XPayContext = useXPay();
 		const initRef = useRef(false);
@@ -93,7 +93,9 @@ export const XPayCard = forwardRef<unknown, XPayCardProps>(
 			const onCardError = (e: any) => {
 				console.log(e);
 				if (cardErrorHandler) {
-					cardErrors.current = e.detail.errorMessage || null;
+					if (showErrors) {
+						setCardErrors((prev) => e.detail.errorMessage || null);
+					}
 					cardErrorHandler(e.detail.errorMessage || null);
 				}
 			};
@@ -164,10 +166,8 @@ export const XPayCard = forwardRef<unknown, XPayCardProps>(
 						</div>
 					</div>
 				)}
-				{showErrors && cardErrors && cardErrors?.current && (
-					<div {...(styleErrors && { style: styleErrors })}>
-						{cardErrors.current}
-					</div>
+				{showErrors && cardErrors && (
+					<div {...(styleErrors && { style: styleErrors })}>{cardErrors}</div>
 				)}
 			</div>
 		);

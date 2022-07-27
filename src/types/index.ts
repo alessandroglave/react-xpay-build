@@ -53,6 +53,8 @@ export type PaymentMethod =
 	| "APPLEPAY"
 	| "AMAZONPAY"
 	| "MYBANK"
+	| "NEXIPAY"
+	| "SCT"
 	| "ALIPAY"
 	| "WECHATPAY"
 	| "GIROPAY"
@@ -84,8 +86,10 @@ export interface XPayProviderI {
 	sdk: any;
 	order: OrderInterface;
 	apiKey: string;
-	nonceHandler?: any;
-	paymentResultHandler?: any;
+	xpayReadyHandler?: (e:NexiEvent) => any;
+	paymentStartedHandler?: (e:NexiEvent) => any;
+	nonceHandler?: (e:NexiEvent) => any;
+	paymentResultHandler?: (e:NexiEvent) => any;
 	customConfig?: CustomConfigI | null;
 	secure?: boolean;
 	children?: any;
