@@ -14,6 +14,8 @@ export const XPayProvider = ({
 	sdk,
 	order,
 	apiKey,
+	xpayReadyHandler,
+	paymentStartedHandler,
 	nonceHandler,
 	paymentResultHandler,
 	customConfig = null,
@@ -102,6 +104,21 @@ export const XPayProvider = ({
 	 * Set event listeners with custom callbacks, if provided
 	**/
 	useEffect(() => {
+		// library ready
+		const onXPayReady = (e: NexiEvent) => {
+			if(xpayReadyHandler) {
+				return xpayReadyHandler(e)
+			}
+			console.log(`XPay Build sdk ready: ${e}`)
+		};
+
+		// detects click on APM
+		const onPaymentStartedHandler = (e: NexiEvent) => {
+			if(paymentStartedHandler) {
+				return paymentStartedHandler(e)
+			}
+			console.log(`PaymentStarted: ${e}`)
+		};
 		// card
 		const onNonceEvent = (e: NexiEvent) => {
 			if(!nonceHandler) {
@@ -121,10 +138,14 @@ export const XPayProvider = ({
     }
 
 
+		window.addEventListener("XPay_Ready", onXPayReady);
 		window.addEventListener("XPay_Nonce", onNonceEvent);
+		window.addEventListener("XPay_Payment_Started", onPaymentStartedHandler);
 		window.addEventListener("XPay_Payment_Result", onPaymentResult);
 		return () => {
+			window.removeEventListener("XPay_Ready", onXPayReady);
 			window.removeEventListener("XPay_Nonce", onNonceEvent);
+			window.removeEventListener("XPay_Payment_Started", onPaymentStartedHandler);
 			window.removeEventListener("XPay_Payment_Result", onPaymentResult);
 		};
 	}, []);
