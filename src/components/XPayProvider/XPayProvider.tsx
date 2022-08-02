@@ -109,7 +109,7 @@ export const XPayProvider = ({
 			if(xpayReadyHandler) {
 				return xpayReadyHandler(e)
 			}
-			console.log(`XPay Build sdk ready: ${e}`)
+			console.log(`XPay Build sdk ready:`, e)
 		};
 
 		// detects click on APM
@@ -117,12 +117,12 @@ export const XPayProvider = ({
 			if(paymentStartedHandler) {
 				return paymentStartedHandler(e)
 			}
-			console.log(`PaymentStarted: ${e}`)
+			console.log(`PaymentStarted:`, e)
 		};
 		// card
 		const onNonceEvent = (e: NexiEvent) => {
 			if(!nonceHandler) {
-				console.warn(`${ERRORS.MISSING_NONCE_HANDLER} ${e.detail}`)
+				console.warn(`${ERRORS.MISSING_NONCE_HANDLER}`,e.detail)
 				return;
 			}
 			return nonceHandler(e.detail)
@@ -130,8 +130,8 @@ export const XPayProvider = ({
 
 		// detects apm results (e.detail.tipoTransazione === 'PAYPAL')
 		const onPaymentResult = (e: NexiEvent) => {
-			console.log(`${ERRORS.MISSING_PAYMENT_RESULT_HANDLER} ${e.detail}`)
 			if(!paymentResultHandler) {
+				console.log(`${ERRORS.MISSING_PAYMENT_RESULT_HANDLER}`,e.detail)
 				return;
 			}
 			return paymentResultHandler(e.detail)
