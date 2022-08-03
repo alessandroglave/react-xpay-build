@@ -86,6 +86,7 @@ export interface XPayProviderI {
 	sdk: any;
 	order: OrderInterface;
 	apiKey: string;
+	env: Environments;
 	xpayReadyHandler?: (e:NexiEvent) => any;
 	paymentStartedHandler?: (e:NexiEvent) => any;
 	nonceHandler?: (e:NexiEvent) => any;
@@ -149,4 +150,9 @@ export interface StyleSplittedI {
 export interface StyleSplittedIField {
 	wrapper?: React.CSSProperties | null;
 	input?: React.CSSProperties | null;
+}
+
+export enum Environments {
+	PROD,
+	TEST
 }

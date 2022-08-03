@@ -4,7 +4,7 @@ import React, {
 	createContext,
 	useContext,
 } from "react";
-import { ERRORS, NexiEvent, XPay, XPayProviderI } from "../../types";
+import { Environments, ERRORS, NexiEvent, XPay, XPayProviderI } from "../../types";
 import { usePrevious } from "utils/usePrevious";
 import { buildConfig, parseXPayProp, XPayWrapperContextValue } from "./utils";
 
@@ -14,6 +14,7 @@ export const XPayProvider = ({
 	sdk,
 	order,
 	apiKey,
+	env = Environments.TEST,
 	xpayReadyHandler,
 	paymentStartedHandler,
 	nonceHandler,
@@ -71,7 +72,7 @@ export const XPayProvider = ({
 
 		// init sdk
 		XPay.init();
-		const config = buildConfig(apiKey, order, XPay, customConfig);
+		const config = buildConfig(apiKey, env, order, XPay, customConfig);
 		XPay.setConfig(config);
 		
 		/** 

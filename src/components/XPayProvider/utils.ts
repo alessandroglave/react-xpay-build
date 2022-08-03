@@ -1,4 +1,4 @@
-import { CustomConfigI, ERRORS, GenericObject, OrderInterface, XPay } from "../../types";
+import { CustomConfigI, Environments, ERRORS, GenericObject, OrderInterface, XPay } from "../../types";
 import { isPromise, isXPay } from "../../utils/utils";
 
 /**
@@ -6,6 +6,7 @@ import { isPromise, isXPay } from "../../utils/utils";
 **/
 export function buildConfig(
 	apiKey: string,
+	env: Environments,
 	order: OrderInterface,
 	XPay: XPay,
 	customConfig: null | CustomConfigI
@@ -13,7 +14,7 @@ export function buildConfig(
 	const config = {
 		baseConfig: {
 			apiKey: apiKey,
-			enviroment: XPay.Environments.INTEG,
+			enviroment: env === Environments.TEST ? XPay.Environments.INTEG : XPay.Environments.PROD,
 		},
 		paymentParams: {
 			amount: order.amount,
