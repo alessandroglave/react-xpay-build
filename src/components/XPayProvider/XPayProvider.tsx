@@ -1,10 +1,5 @@
-import React, {
-	useEffect,
-	useState,
-	createContext,
-	useContext,
-} from "react";
-import { Environments, ERRORS, NexiEvent, XPay, XPayProviderI } from "../../types";
+import React, { useEffect, useState, createContext, useContext } from "react";
+import { ERRORS, NexiEvent, XPay, XPayProviderI } from "../../types";
 import { usePrevious } from "utils/usePrevious";
 import { buildConfig, parseXPayProp, XPayWrapperContextValue } from "./utils";
 
@@ -14,7 +9,7 @@ export const XPayProvider = ({
 	sdk,
 	order,
 	apiKey,
-	env = Environments.TEST,
+	isProduction = false,
 	xpayReadyHandler,
 	paymentStartedHandler,
 	nonceHandler,
@@ -59,7 +54,7 @@ export const XPayProvider = ({
 
 	/**
 	 * Init XPay Build SDK and set payment config
-	**/
+	 **/
 	useEffect(() => {
 		if (!ctx.sdk) {
 			return;
@@ -72,14 +67,14 @@ export const XPayProvider = ({
 
 		// init sdk
 		XPay.init();
-		const config = buildConfig(apiKey, env, order, XPay, customConfig);
+		const config = buildConfig(apiKey, isProduction, order, XPay, customConfig);
 		XPay.setConfig(config);
-		
-		/** 
+
+		/**
 		 * Sets initialConfig to true
 		 * Other components will mount nexi's iframes on DOM only
 		 * if this flag is true
-		**/ 
+		 **/
 		setInitialConfig(true);
 
 		// Handle 3D secure
@@ -93,51 +88,50 @@ export const XPayProvider = ({
 
 	/**
 	 * Detect props changes
-	**/
+	 **/
 	const prevXPay = usePrevious(sdk);
 	useEffect(() => {
 		if (prevXPay !== null && prevXPay !== sdk) {
-			console.warn(ERRORS.PROVIDER_PROPS_CHANGED)
+			console.warn(ERRORS.PROVIDER_PROPS_CHANGED);
 		}
 	}, [prevXPay, sdk]);
 
 	/**
 	 * Set event listeners with custom callbacks, if provided
-	**/
+	 **/
 	useEffect(() => {
 		// library ready
 		const onXPayReady = (e: NexiEvent) => {
-			if(xpayReadyHandler) {
-				return xpayReadyHandler(e)
+			if (xpayReadyHandler) {
+				return xpayReadyHandler(e);
 			}
-			console.log(`XPay Build sdk ready:`, e)
+			console.log(`XPay Build sdk ready:`, e);
 		};
 
 		// detects click on APM
 		const onPaymentStartedHandler = (e: NexiEvent) => {
-			if(paymentStartedHandler) {
-				return paymentStartedHandler(e)
+			if (paymentStartedHandler) {
+				return paymentStartedHandler(e);
 			}
-			console.log(`PaymentStarted:`, e)
+			console.log(`PaymentStarted:`, e);
 		};
 		// card
 		const onNonceEvent = (e: NexiEvent) => {
-			if(!nonceHandler) {
-				console.warn(`${ERRORS.MISSING_NONCE_HANDLER}`,e.detail)
+			if (!nonceHandler) {
+				console.warn(`${ERRORS.MISSING_NONCE_HANDLER}`, e.detail);
 				return;
 			}
-			return nonceHandler(e.detail)
+			return nonceHandler(e.detail);
 		};
 
 		// detects apm results (e.detail.tipoTransazione === 'PAYPAL')
 		const onPaymentResult = (e: NexiEvent) => {
-			if(!paymentResultHandler) {
-				console.log(`${ERRORS.MISSING_PAYMENT_RESULT_HANDLER}`,e.detail)
+			if (!paymentResultHandler) {
+				console.log(`${ERRORS.MISSING_PAYMENT_RESULT_HANDLER}`, e.detail);
 				return;
 			}
-			return paymentResultHandler(e.detail)
-    }
-
+			return paymentResultHandler(e.detail);
+		};
 
 		window.addEventListener("XPay_Ready", onXPayReady);
 		window.addEventListener("XPay_Nonce", onNonceEvent);
@@ -146,7 +140,10 @@ export const XPayProvider = ({
 		return () => {
 			window.removeEventListener("XPay_Ready", onXPayReady);
 			window.removeEventListener("XPay_Nonce", onNonceEvent);
-			window.removeEventListener("XPay_Payment_Started", onPaymentStartedHandler);
+			window.removeEventListener(
+				"XPay_Payment_Started",
+				onPaymentStartedHandler
+			);
 			window.removeEventListener("XPay_Payment_Result", onPaymentResult);
 		};
 	}, []);
@@ -161,7 +158,7 @@ XPayProvider.displayName = "XPayProvider";
 
 /**
  * Hooks
-**/
+ **/
 export const useXPay = (): XPay | null => {
 	const ctx = useContext(XPayContext);
 	if (!ctx) {
