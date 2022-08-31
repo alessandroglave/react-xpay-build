@@ -142,6 +142,7 @@ export type GenericReactComponent =
 
 export interface StyleSplittedI {
 	wrapper?: React.CSSProperties | null;
+	classNameWrapper?: string | null;
 	pan?: StyleSplittedIField;
 	expiry?: StyleSplittedIField;
 	cvc?: StyleSplittedIField;
@@ -149,5 +150,7 @@ export interface StyleSplittedI {
 
 export interface StyleSplittedIField {
 	wrapper?: React.CSSProperties | null;
+	classNameWrapper?: string | null;
 	input?: React.CSSProperties | null;
+	classNameInput?: string | null;
 }

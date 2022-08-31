@@ -21,6 +21,7 @@ export interface XPayCardProps {
 	style?: XPayCardStyle | null;
 	/** React style object applied to wrapper div **/
 	styleWrapper?: React.CSSProperties | null;
+	classNameWrapper?: string | null;
 	/** React style object applied to wrapper divs **/
 	styleSplitted?: StyleSplittedI;
 	/** React components: splitted form labels */
@@ -45,6 +46,7 @@ export const XPayCard = forwardRef<unknown, XPayCardProps>(
 			cardType = CardTypes.CARD,
 			style = null,
 			styleWrapper = null,
+			classNameWrapper = null,
 			styleErrors = null,
 			showErrors = true,
 			styleSplitted = null,
@@ -118,16 +120,23 @@ export const XPayCard = forwardRef<unknown, XPayCardProps>(
 					id="react-xpay-card"
 					ref={cardRef}
 					{...(styleWrapper && { style: styleWrapper })}
+					{...(classNameWrapper && { className: classNameWrapper })}
 				></div>
 				{cardType === CardTypes.SPLIT && (
 					<div
 						{...(styleSplitted?.wrapper && {
 							style: styleSplitted.wrapper,
 						})}
+						{...(styleSplitted?.classNameWrapper && {
+							className: styleSplitted?.classNameWrapper,
+						})}
 					>
 						<div
 							{...(styleSplitted?.pan?.wrapper && {
 								style: styleSplitted.pan?.wrapper,
+							})}
+							{...(styleSplitted?.pan?.classNameWrapper && {
+								className: styleSplitted?.pan?.classNameWrapper,
 							})}
 						>
 							{labelPan && labelPan}
@@ -136,11 +145,17 @@ export const XPayCard = forwardRef<unknown, XPayCardProps>(
 								{...(styleSplitted?.pan?.input && {
 									style: styleSplitted.pan?.input,
 								})}
+								{...(styleSplitted?.pan?.classNameInput && {
+									className: styleSplitted.pan?.classNameInput,
+								})}
 							></div>
 						</div>
 						<div
 							{...(styleSplitted?.expiry?.wrapper && {
 								style: styleSplitted.expiry?.wrapper,
+							})}
+							{...(styleSplitted?.expiry?.classNameWrapper && {
+								className: styleSplitted?.expiry?.classNameWrapper,
 							})}
 						>
 							{labelExpiry && labelExpiry}
@@ -149,11 +164,17 @@ export const XPayCard = forwardRef<unknown, XPayCardProps>(
 								{...(styleSplitted?.expiry?.input && {
 									style: styleSplitted.expiry?.input,
 								})}
+								{...(styleSplitted?.expiry?.classNameInput && {
+									className: styleSplitted.expiry?.classNameInput,
+								})}
 							></div>
 						</div>
 						<div
 							{...(styleSplitted?.cvc?.wrapper && {
 								style: styleSplitted.cvc?.wrapper,
+							})}
+							{...(styleSplitted?.cvc?.classNameWrapper && {
+								className: styleSplitted?.cvc?.classNameWrapper,
 							})}
 						>
 							{labelCVC && labelCVC}
@@ -161,6 +182,9 @@ export const XPayCard = forwardRef<unknown, XPayCardProps>(
 								id="react-xpay-cvc"
 								{...(styleSplitted?.cvc?.input && {
 									style: styleSplitted.cvc?.input,
+								})}
+								{...(styleSplitted?.cvc?.classNameInput && {
+									className: styleSplitted.cvc?.classNameInput,
 								})}
 							/>
 						</div>
