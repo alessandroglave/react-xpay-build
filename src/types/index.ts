@@ -53,6 +53,7 @@ export type PaymentMethod =
 	| "APPLEPAY"
 	| "AMAZONPAY"
 	| "MYBANK"
+	| "PPRO_MYBANK"
 	| "NEXIPAY"
 	| "SCT"
 	| "ALIPAY"
